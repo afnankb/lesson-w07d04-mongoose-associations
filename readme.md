@@ -228,7 +228,7 @@ const dough = new Ingredient({
 
 // SAVE THE TWO INGREDIENTS SO
 // WE HAVE ACCESS TO THEIR _IDS
-cheddar.save(function(err, savedCheese) {
+cheddar.save((err, savedCheese)=> {
   if (err) {
     return console.log(err);
   } else {
@@ -254,7 +254,7 @@ const cheesyQuiche = new Food({
 // INGREDIENTS ARRAY
 cheesyQuiche.ingredients.push(cheddar); // associated!
 cheesyQuiche.ingredients.push(dough);
-cheesyQuiche.save(function(err, savedCheesyQuiche) {
+cheesyQuiche.save((err, savedCheesyQuiche)=> {
   if (err) {
     return console.log(err);
   } else {
