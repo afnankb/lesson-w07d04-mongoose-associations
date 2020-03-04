@@ -202,9 +202,9 @@ Check out the value associated with the `ingredients` key inside the food schema
 - Giving `ref: Ingredient` tells the schema we will only be putting `Ingredient` instance ObjectIds inside the `ingredients` array.
 
 <br>
-#### 2) Test file
+#### 2) Seed file
 
-Let's create a `test.js` file. Here's how we'd take our models for a spin and make two objects to test out creating a Ingredient document and Food document.
+Let's create a `seed.js` file. Here's how we'd take our models for a spin and make two objects to test out creating a Ingredient document and Food document.
 
 ```js
 const mongoose = require('mongoose');
@@ -296,9 +296,13 @@ const Food = require('./models/food');
 const Ingredient = require('./models/ingredient');
 
 const mongoURI = 'mongodb://localhost:27017/mongooseAssociationsInClass';
-mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
-  console.log('the connection with mongod is established');
-});
+mongoose.connect(
+  mongoURI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('the connection with mongod is established');
+  }
+);
 
 Food.findOne({ name: 'Quiche' })
   .populate('ingredients') // <- pull in ingredient data
@@ -402,7 +406,7 @@ Imagine you have a database of `User`s, each with many embedded `Tweet`s. If you
 
 #### 1) Set Up Structure with Schemas
 
-1.        `touch models/user.js`
+1.          `touch models/user.js`
 
 ```js
 const mongoose = require('mongoose');
