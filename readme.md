@@ -126,9 +126,13 @@ const mongoose = require('mongoose');
 
 const mongoURI = 'mongodb://localhost:27017/mongoRelationships';
 
-mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
-  console.log('the connection with mongod is established');
-});
+mongoose.connect(
+  mongoURI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('the connection with mongod is established');
+  }
+);
 
 app.listen(3000, () => {
   console.log('listening');
@@ -198,8 +202,7 @@ Check out the value associated with the `ingredients` key inside the food schema
 - Giving `ref: Ingredient` tells the schema we will only be putting `Ingredient` instance ObjectIds inside the `ingredients` array.
 
 <br>
-
-## Test file
+#### 2) Test file
 
 Let's create a `test.js` file. Here's how we'd take our models for a spin and make two objects to test out creating a Ingredient document and Food document.
 
@@ -211,9 +214,13 @@ const Food = require('./models/food');
 const Ingredient = require('./models/ingredient');
 
 const mongoURI = 'mongodb://localhost/mongoRelationships';
-mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
-  console.log('the connection with mongod is established');
-});
+mongoose.connect(
+  mongoURI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('the connection with mongod is established');
+  }
+);
 
 // CREATE TWO INGREDIENTS
 const cheddar = new Ingredient({
@@ -228,19 +235,19 @@ const dough = new Ingredient({
 
 // SAVE THE TWO INGREDIENTS SO
 // WE HAVE ACCESS TO THEIR _IDS
-cheddar.save((err, savedCheese)=> {
+cheddar.save((err, savedIng) => {
   if (err) {
     return console.log(err);
   } else {
-    console.log('cheddar saved successfully');
+    console.log('cheddar saved successfully', savedIng);
   }
 });
 
-dough.save((err, savedCheese) => {
+dough.save((err, savedIng) => {
   if (err) {
     console.log(err);
   } else {
-    console.log('dough saved successfully');
+    console.log('dough saved successfully', savedIng);
   }
 });
 
@@ -254,11 +261,11 @@ const cheesyQuiche = new Food({
 // INGREDIENTS ARRAY
 cheesyQuiche.ingredients.push(cheddar); // associated!
 cheesyQuiche.ingredients.push(dough);
-cheesyQuiche.save((err, savedCheesyQuiche)=> {
+cheesyQuiche.save((err, savedFood) => {
   if (err) {
     return console.log(err);
   } else {
-    console.log('cheesyQuiche food is ', savedCheesyQuiche);
+    console.log('cheesyQuiche food is ', savedFood);
   }
 });
 ```
@@ -395,7 +402,7 @@ Imagine you have a database of `User`s, each with many embedded `Tweet`s. If you
 
 #### 1) Set Up Structure with Schemas
 
-1.      `touch models/user.js`
+1.        `touch models/user.js`
 
 ```js
 const mongoose = require('mongoose');
